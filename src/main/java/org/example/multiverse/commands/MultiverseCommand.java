@@ -33,6 +33,7 @@ public class MultiverseCommand implements CommandExecutor {
             sender.sendMessage("§b--- Multiverse ---");
             sender.sendMessage("§e/mv create <nombre> <normal/flat/void>");
             sender.sendMessage("§e/mv tp <mundo>");
+            sender.sendMessage("§e/mv setspawn");
             return true;
         }
 
@@ -56,6 +57,13 @@ public class MultiverseCommand implements CommandExecutor {
             } else {
                 p.sendMessage(config.getMessage("world-not-found").replace("%world%", name));
             }
+            return true;
+        }
+
+        if (args[0].equalsIgnoreCase("setspawn") && sender instanceof Player) {
+            Player p = (Player) sender;
+            worldManager.setSpawn(p.getWorld().getName(), p.getLocation());
+            p.sendMessage(config.getMessage("spawn-set"));
             return true;
         }
 
