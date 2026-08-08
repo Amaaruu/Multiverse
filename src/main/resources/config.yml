@@ -1,0 +1,25 @@
+settings:
+  default-world: "world"
+
+void:
+  block: "STONE"
+  x: 0
+  y: 64
+  z: 0
+
+messages:
+  prefix: '&8[&bMultiverse&8] '
+  world-created: '&aMundo creado correctamente: &f%world%'
+  world-loaded: '&aMundo cargado: &f%world%'
+  world-unloaded: '&eMundo descargado: &f%world%'
+  world-deleted: '&cMundo eliminado: &f%world%'
+  world-not-found: '&cEl mundo &f%world% &cno existe.'
+  world-already-exists: '&cEl mundo &f%world% &cya existe.'
+  no-permission: '&cNo tienes permiso para hacer esto.'
+  spawn-set: '&aSpawn establecido correctamente.'
+  teleported: '&aTeletransportado a &f%world%&a.'
+  default-world-set: '&aMundo por defecto establecido: &f%world%'
+  cannot-unload-default: '&cNo puedes descargar el mundo por defecto.'
+  cannot-delete-default: '&cNo puedes eliminar el mundo por defecto.'
+
+worlds: {}

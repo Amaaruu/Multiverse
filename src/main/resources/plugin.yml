@@ -1,0 +1,14 @@
+name: Multiverse
+version: 1.0.0
+main: com.isaac.multiverse.Multiverse
+api-version: 1.13
+author: Isaac
+description: Gestor de mundos optimizado y ligero para 1.8.8.
+commands:
+  mv:
+    description: Comandos de gestion de mundos.
+    aliases: [multiverse]
+permissions:
+  multiverse.admin:
+    description: Acceso total al plugin.
+    default: op
