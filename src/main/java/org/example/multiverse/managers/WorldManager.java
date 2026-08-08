@@ -30,7 +30,7 @@ public class WorldManager {
         World world = creator.createWorld();
 
         if (type.equalsIgnoreCase("VOID")) {
-            // Reglas de juego para Lobbies
+            // Reglas de juego para Lobbies (sin monstruos, sin noche, sin lluvia)
             world.setGameRuleValue("doMobSpawning", "false");
             world.setGameRuleValue("doDaylightCycle", "false");
             world.setStorm(false);
@@ -45,7 +45,7 @@ public class WorldManager {
 
             world.getBlockAt(bx, by, bz).setType(mat);
 
-            // Configurar spawn
+            // Configurar spawn en el centro del bloque
             Location spawn = new Location(world, bx + 0.5, by + 1.0, bz + 0.5, 0f, 0f);
             world.setSpawnLocation(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ());
 
@@ -63,11 +63,14 @@ public class WorldManager {
             if (autoLoad) {
                 String type = configManager.getConfig().getString("worlds." + worldName + ".type", "NORMAL");
                 WorldCreator creator = new WorldCreator(worldName);
+
+                // IMPORTANTE: Volver a asignar el VoidChunkGenerator al reiniciar el servidor
                 if (type.equalsIgnoreCase("VOID")) {
                     creator.generator(new VoidChunkGenerator());
                 }
+
                 Bukkit.createWorld(creator);
-                plugin.getLogger().info("Mundo cargado: " + worldName);
+                plugin.getLogger().info("Mundo cargado automáticamente: " + worldName);
             }
         }
     }
@@ -97,5 +100,34 @@ public class WorldManager {
             return new Location(w, x, y, z, yaw, pitch);
         }
         return null;
+    }
+
+    public void setSpawn(String name, Location loc) {
+        String path = "worlds." + name + ".spawn";
+        configManager.getConfig().set(path + ".x", loc.getX());
+        configManager.getConfig().set(path + ".y", loc.getY());
+        configManager.getConfig().set(path + ".z", loc.getZ());
+        configManager.getConfig().set(path + ".yaw", loc.getYaw());
+        configManager.getConfig().set(path + ".pitch", loc.getPitch());
+        configManager.saveConfig();
+
+        World w = Bukkit.getWorld(name);
+        if (w != null) {
+            w.setSpawnLocation(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+        }
+    }
+
+    public boolean unloadWorld(String name) {
+        World world = Bukkit.getWorld(name);
+        if (world != null) {
+            // Mover a los jugadores al mundo principal antes de descargar
+            World defaultWorld = Bukkit.getWorlds().get(0);
+            for (Player p : world.getPlayers()) {
+                p.teleport(defaultWorld.getSpawnLocation());
+                p.sendMessage("§eEl mundo en el que estabas ha sido descargado. Has sido enviado al Lobby principal.");
+            }
+            return Bukkit.unloadWorld(world, true);
+        }
+        return false;
     }
 }
