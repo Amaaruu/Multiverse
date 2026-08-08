@@ -2,7 +2,7 @@ package org.example.multiverse.commands;
 
 import org.example.multiverse.Multiverse;
 import org.example.multiverse.managers.ConfigManager;
-import com.isaac.multiverse.managers.WorldManager;
+import org.example.multiverse.managers.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
