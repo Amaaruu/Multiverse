@@ -1,6 +1,6 @@
 name: Multiverse
 version: 1.0.0
-main: com.isaac.multiverse.Multiverse
+main: org.example.multiverse.Multiverse
 api-version: 1.13
 author: Isaac
 description: Gestor de mundos optimizado y ligero para 1.8.8.
